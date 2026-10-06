@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مهندسین مشاور رستاک | از ریشه تا آسمان</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--navy:#0B1E33;--gold:#D4AF37;--cream:#F5F0E6;--silver:#C0C0C0;--emerald:#0B3D2E;}
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  font-family:'Vazirmatn',sans-serif;
+  background:var(--navy);
+  color:var(--cream);
+  overflow:hidden;
+  height:100vh;
+  width:100vw;
+}
+
+/* ========== صفحه شروع ========== */
+#startScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at center,#12294a 0%,var(--navy) 70%);
+  z-index:100;
+  transition:opacity .8s ease;
+  padding:20px;
+  text-align:center;
+}
+#startScreen.fade-out{opacity:0;pointer-events:none;}
+
+#startScreen .logo{
+  width:130px;
+  height:auto;
+  margin-bottom:26px;
+  filter:drop-shadow(0 6px 30px rgba(212,175,55,.35));
+  animation:fadeIn 1.4s ease both;
+}
+
+#startScreen h1{
+  font-size:28px;
+  color:var(--cream);
+  font-weight:500;
+  margin-bottom:10px;
+  animation:fadeIn 1.4s ease .2s both;
+}
+
+#startScreen h2{
+  font-size:18px;
+  color:var(--gold);
+  font-weight:400;
+  margin-bottom:6px;
+  animation:fadeIn 1.4s ease .4s both;
+}
+
+#startScreen h3{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  color:var(--silver);
+  font-weight:300;
+  letter-spacing:4px;
+  margin-bottom:44px;
+  animation:fadeIn 1.4s ease .6s both;
+}
+
+.start-buttons{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+  animation:fadeIn 1.4s ease .8s both;
+}
+
+.btn{
+  padding:14px 32px;
+  border-radius:6px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:15px;
+  font-family:inherit;
+  cursor:pointer;
+  transition:all .3s ease;
+  letter-spacing:1px;
+}
+.btn:hover{background:rgba(212,175,55,.15);}
+.btn.primary{background:var(--gold);color:var(--navy);}
+.btn.primary:hover{background:#b8952a;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== صفحه موشن ========== */
+#introScreen{
+  position:fixed;
+  inset:0;
+  background:var(--navy);
+  z-index:90;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .6s ease;
+}
+#introScreen.fade-out{opacity:0;}
+
+#introScreen video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ========== دکمه Skip ========== */
+#skipBtn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  padding:8px 18px;
+  background:rgba(192,192,192,.12);
+  color:var(--silver);
+  border:1px solid rgba(192,192,192,.3);
+  border-radius:6px;
+  font-size:13px;
+  font-family:inherit;
+  cursor:pointer;
+  z-index:200;
+  display:none;
+  transition:all .3s ease;
+  backdrop-filter:blur(8px);
+}
+#skipBtn:hover{background:rgba(192,192,192,.25);color:var(--cream);}
+
+/* ========== دکمه کنترل صدا ========== */
+#soundToggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:rgba(11,30,51,.75);
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-size:18px;
+  cursor:pointer;
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  transition:all .3s ease;
+  backdrop-filter:blur(8px);
+}
+#soundToggle:hover{background:var(--gold);color:var(--navy);}
+
+/* ========== دفترچه ========== */
+#bookletFrame{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+  display:none;
+  z-index:80;
+  background:#e8e4da;
+}
+
+/* ========== موبایل ========== */
+@media (max-width:600px){
+  #startScreen h1{font-size:22px;}
+  #startScreen h2{font-size:15px;}
+  #startScreen h3{font-size:11px;letter-spacing:3px;}
+  #startScreen .logo{width:100px;}
+  .btn{padding:12px 24px;font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ صفحه شروع ============ -->
+<div id="startScreen">
+  <img src="images/logo-gold.png" alt="رستاک" class="logo">
+  <h1>مهندسین مشاور رستاک</h1>
+  <h2>رستاک، از ریشه تا آسمان</h2>
+  <h3>RASTACK — FROM ROOT TO SKY</h3>
+  <div class="start-buttons">
+    <button class="btn primary" onclick="startWithMusic()">مشاهده رزومه با موزیک</button>
+    <button class="btn" onclick="startWithoutMusic()">ورود بدون موزیک</button>
+  </div>
+</div>
+
+<!-- ============ صفحه موشن ============ -->
+<div id="introScreen">
+  <video id="introVideo" playsinline preload="auto">
+    <source src="intro-final.mov" type="video/quicktime">
+  </video>
+</div>
+
+<!-- ============ دکمه‌ها ============ -->
+<button id="skipBtn" onclick="skipIntro()">رد کردن ←</button>
+<button id="soundToggle" onclick="toggleSound()">🔊</button>
+
+<!-- ============ دفترچه ============ -->
+<iframe id="bookletFrame" src="booklet.html"></iframe>
+
+<!-- ============ موزیک ============ -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+var startScreen = document.getElementById('startScreen');
+var introScreen = document.getElementById('introScreen');
+var introVideo = document.getElementById('introVideo');
+var skipBtn = document.getElementById('skipBtn');
+var soundToggle = document.getElementById('soundToggle');
+var bookletFrame = document.getElementById('bookletFrame');
+var bgMusic = document.getElementById('bgMusic');
+
+var musicEnabled = false;
+var introFinished = false;
+
+/* ====== بررسی حافظه ====== */
+var savedChoice = localStorage.getItem('rastack_music');
+if (savedChoice === 'off') {
+  soundToggle.textContent = '🔇';
+} else {
+  soundToggle.textContent = '🔊';
+}
+
+/* ====== شروع با موزیک ====== */
+function startWithMusic() {
+  musicEnabled = true;
+  localStorage.setItem('rastack_music', 'on');
+  startIntro();
+}
+
+/* ====== شروع بدون موزیک ====== */
+function startWithoutMusic() {
+  musicEnabled = false;
+  localStorage.setItem('rastack_music', 'off');
+  startIntro();
+}
+
+/* ====== شروع موشن ====== */
+function startIntro() {
+  startScreen.classList.add('fade-out');
+  setTimeout(function(){
+    startScreen.style.display = 'none';
+    introScreen.style.display = 'flex';
+    skipBtn.style.display = 'block';
+    soundToggle.style.display = 'flex';
+
+    if (musicEnabled) {
+      bgMusic.volume = 0.55;
+      bgMusic.currentTime = 0;
+      bgMusic.play().catch(function(e){ console.log('autoplay blocked'); });
+    }
+
+    introVideo.play().catch(function(e){
+      console.log('video play blocked');
+      showBooklet();
+    });
+  }, 800);
+}
+
+/* ====== پایان موشن ====== */
+introVideo.addEventListener('ended', function(){
+  showBooklet();
+});
+
+/* ====== رد کردن موشن ====== */
+function skipIntro() {
+  introVideo.pause();
+  showBooklet();
+}
+
+/* ====== نمایش دفترچه ====== */
+function showBooklet() {
+  if (introFinished) return;
+  introFinished = true;
+
+  introScreen.classList.add('fade-out');
+  setTimeout(function(){
+    introScreen.style.display = 'none';
+    skipBtn.style.display = 'none';
+    bookletFrame.style.display = 'block';
+    /* موزیک ادامه پیدا می‌کند */
+  }, 600);
+}
+
+/* ====== کنترل صدا ====== */
+function toggleSound() {
+  if (musicEnabled) {
+    bgMusic.pause();
+    musicEnabled = false;
+    soundToggle.textContent = '🔇';
+    localStorage.setItem('rastack_music', 'off');
+  } else {
+    bgMusic.volume = 0.55;
+    bgMusic.play().catch(function(){});
+    musicEnabled = true;
+    soundToggle.textContent = '🔊';
+    localStorage.setItem('rastack_music', 'on');
+  }
+}
+
+/* ====== Fade Out موزیک از دفترچه ====== */
+window.addEventListener('message', function(event){
+  if (event.data === 'fade-out-music') {
+    fadeOutMusic();
+  }
+});
+
+function fadeOutMusic() {
+  var duration = 2000; /* 2 ثانیه */
+  var steps = 40;
+  var stepTime = duration / steps;
+  var stepVol = bgMusic.volume / steps;
+  var i = 0;
+  var interval = setInterval(function(){
+    i++;
+    if (i >= steps || bgMusic.volume <= 0) {
+      bgMusic.volume = 0;
+      bgMusic.pause();
+      clearInterval(interval);
+    } else {
+      bgMusic.volume = Math.max(0, bgMusic.volume - stepVol);
+    }
+  }, stepTime);
+}
+
+/* ====== اگر کاربر تب را ترک کرد ====== */
+document.addEventListener('visibilitychange', function(){
+  if (document.hidden) {
+    bgMusic.pause();
+  } else if (musicEnabled) {
+    bgMusic.play().catch(function(){});
+  }
+});
+</script>
+</body>
+</html>
