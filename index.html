@@ -3,77 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مهندسین مشاور رستاک</title>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<title>مهندسین مشاور رستاک | کاتالوگ الکترونیک</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0B1E33;--gold:#D4AF37;--cream:#F5F0E6;--silver:#C0C0C0}
+:root{
+  --navy:#0B1E33;
+  --gold:#D4AF37;
+  --cream:#F5F0E6;
+  --silver:#C0C0C0;
+  --emerald:#0B3D2E;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{font-family:'Vazirmatn',sans-serif;background:var(--navy);color:var(--cream);overflow:hidden;height:100vh;width:100vw}
+html,body{
+  font-family:'Vazirmatn',sans-serif;
+  background:var(--navy);
+  color:var(--cream);
+  overflow:hidden;
+  height:100vh;
+  width:100vw;
+}
 
+/* ==================== صفحه شروع ==================== */
 #startScreen{
-  position:fixed;inset:0;display:flex;flex-direction:column;
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:radial-gradient(circle at center,#12294a 0%,var(--navy) 70%);
-  z-index:100;transition:opacity .8s ease;padding:20px;text-align:center;
+  background:radial-gradient(circle at center,#12294a 0%,var(--navy) 75%);
+  z-index:100;
+  transition:opacity .9s ease;
+  padding:20px;
+  text-align:center;
 }
 #startScreen.fade-out{opacity:0;pointer-events:none}
 #startScreen .logo{
-  width:130px;margin-bottom:24px;
-  filter:drop-shadow(0 6px 30px rgba(212,175,55,.4));
-  animation:logoIn 1.5s ease both;
+  width:140px;height:auto;
+  margin-bottom:30px;
+  filter:drop-shadow(0 8px 40px rgba(212,175,55,.4));
+  animation:logoIn 1.6s cubic-bezier(.2,.8,.2,1) both;
 }
-#startScreen h1{font-size:26px;color:var(--cream);font-weight:500;margin-bottom:8px;animation:fadeUp 1.4s ease .3s both}
-#startScreen h2{font-size:16px;color:var(--gold);margin-bottom:6px;animation:fadeUp 1.4s ease .5s both}
-#startScreen h3{font-family:'Montserrat',sans-serif;font-size:12px;color:var(--silver);letter-spacing:4px;margin-bottom:40px;animation:fadeUp 1.4s ease .7s both}
-.start-buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeUp 1.4s ease .9s both}
-.btn{padding:14px 30px;border-radius:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:15px;font-family:inherit;cursor:pointer;transition:all .3s;letter-spacing:1px}
+#startScreen h1{
+  font-size:26px;font-weight:600;
+  color:var(--cream);margin-bottom:10px;
+  animation:fadeUp 1.4s ease .4s both;
+}
+#startScreen h2{
+  font-size:17px;font-weight:500;
+  color:var(--gold);margin-bottom:6px;
+  animation:fadeUp 1.4s ease .6s both;
+}
+#startScreen h3{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;font-weight:300;
+  color:var(--silver);letter-spacing:5px;
+  margin-bottom:46px;
+  animation:fadeUp 1.4s ease .8s both;
+}
+.start-buttons{
+  display:flex;gap:14px;
+  flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 1.4s ease 1s both;
+}
+.btn{
+  padding:15px 34px;
+  border-radius:6px;
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+  font-size:15px;
+  font-weight:500;
+  font-family:inherit;
+  cursor:pointer;
+  transition:all .3s ease;
+  letter-spacing:0.5px;
+}
 .btn:hover{background:rgba(212,175,55,.15)}
 .btn.primary{background:var(--gold);color:var(--navy)}
 .btn.primary:hover{background:#b8952a}
 
-@keyframes logoIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes logoIn{
+  from{opacity:0;transform:scale(.4) rotate(-8deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-#introScreen{position:fixed;inset:0;background:var(--navy);z-index:90;display:none;align-items:center;justify-content:center;transition:opacity .6s ease}
+/* ==================== صفحه موشن ==================== */
+#introScreen{
+  position:fixed;inset:0;
+  background:var(--navy);
+  z-index:90;
+  display:none;
+  align-items:center;justify-content:center;
+  transition:opacity .7s ease;
+}
 #introScreen.fade-out{opacity:0}
-#introScreen video{width:100%;height:100%;object-fit:cover}
+#introScreen video{
+  width:100%;height:100%;
+  object-fit:cover;
+}
 
-#skipBtn{position:fixed;top:20px;left:20px;padding:8px 18px;background:rgba(192,192,192,.15);color:var(--silver);border:1px solid rgba(192,192,192,.3);border-radius:6px;font-size:13px;font-family:inherit;cursor:pointer;z-index:200;display:none;backdrop-filter:blur(8px)}
-#soundToggle{position:fixed;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(11,30,51,.75);border:1px solid var(--gold);color:var(--gold);font-size:18px;cursor:pointer;z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+/* ==================== دکمه‌های شناور ==================== */
+#skipBtn{
+  position:fixed;top:20px;left:20px;
+  padding:9px 20px;
+  background:rgba(192,192,192,.12);
+  color:var(--silver);
+  border:1px solid rgba(192,192,192,.3);
+  border-radius:6px;
+  font-size:13px;
+  font-family:inherit;
+  cursor:pointer;
+  z-index:200;
+  display:none;
+  backdrop-filter:blur(8px);
+  transition:all .3s ease;
+}
+#skipBtn:hover{background:rgba(192,192,192,.25);color:var(--cream)}
+#soundToggle{
+  position:fixed;top:20px;right:20px;
+  width:46px;height:46px;
+  border-radius:50%;
+  background:rgba(11,30,51,.75);
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-size:18px;
+  cursor:pointer;
+  z-index:200;
+  display:none;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  transition:all .3s ease;
+}
 #soundToggle:hover{background:var(--gold);color:var(--navy)}
 
-#bookletFrame{position:fixed;inset:0;width:100%;height:100%;border:none;display:none;z-index:80;background:#0B1E33}
+/* ==================== دفترچه ==================== */
+#bookletFrame{
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  border:none;
+  display:none;
+  z-index:80;
+  background:#0B1E33;
+}
 
 @media (max-width:600px){
-  #startScreen h1{font-size:20px}
+  #startScreen h1{font-size:21px}
   #startScreen h2{font-size:14px}
-  #startScreen h3{font-size:10px;letter-spacing:3px}
-  #startScreen .logo{width:100px}
-  .btn{padding:12px 22px;font-size:14px}
-}
-</style>
-</head>
-<body>
-
-<div id="startScreen">
-  <img src="logo-gold.png" alt="رستاک" class="logo">
-  <h1>مهندسین مشاور رستاک</h1>
-  <h2>رستاک، از ریشه تا آسمان</h2>
-  <h3>RASTACK — FROM ROOT TO SKY</h3>
-  <div class="start-buttons">
-    <button class="btn primary" onclick="startWithMusic()">مشاهده با موزیک</button>
-    <button class="btn" onclick="startWithoutMusic()">ورود بدون موزیک</button>
-  </div>
-</div>
-
-<div id="introScreen">
-  <video id="introVideo" playsinline preload="auto">
-    <source src="intro-final.mov" type="video/quicktime">
-  </video>
-</div>
-
-<button id="skipBtn" onclick="skipIntro()">رد کردن ←</button>
-<button id="soundToggle" onclick="toggleSound()">🔊</button>
-
-<iframe id="bookletFrame" src="booklet.ht
+  #startScreen h3{font-size:9px;letter-spacing:4px}
+  #startScreen .logo{wid
