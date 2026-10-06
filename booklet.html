@@ -2,130 +2,136 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>کاتالوگ رستاک</title>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
+:root{
+  --navy:#0B1E33;
+  --gold:#D4AF37;
+  --cream:#F5F0E6;
+  --silver:#C0C0C0;
+  --emerald:#0B3D2E;
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
   height:100vh;width:100vw;overflow:hidden;
   background:linear-gradient(135deg,#0B1E33 0%,#1a2f4a 100%);
   font-family:'Vazirmatn',sans-serif;
-  display:flex;align-items:center;justify-content:center;
+  color:var(--cream);
 }
-#flipbook{box-shadow:0 20px 60px rgba(0,0,0,.7);border-radius:4px}
-.page{background:#fff;overflow:hidden;position:relative}
-.page img{width:100%;height:100%;object-fit:contain;display:block}
 
-/* Progress bar */
+/* ==================== صفحه کتاب ==================== */
+#bookScreen{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 2s ease;
+}
+#bookScreen.fade-out{opacity:0;pointer-events:none}
+
+#flipbookContainer{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;padding:10px;
+}
+#flipbook{
+  box-shadow:0 20px 70px rgba(0,0,0,.7);
+  border-radius:4px;
+}
+.page{
+  background:#fff;overflow:hidden;position:relative;
+}
+.page img{
+  width:100%;height:100%;object-fit:contain;display:block;
+  user-select:none;-webkit-user-drag:none;
+}
+
+/* ==================== Progress Bar ==================== */
 #progressWrap{
-  position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
-  width:60%;max-width:400px;height:3px;
-  background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden;z-index:99;
+  position:fixed;bottom:78px;left:50%;transform:translateX(-50%);
+  width:55%;max-width:420px;height:3px;
+  background:rgba(255,255,255,.12);border-radius:3px;
+  overflow:hidden;z-index:99;transition:opacity .8s ease;
 }
 #progressBar{
-  height:100%;width:0;background:linear-gradient(90deg,#D4AF37,#E8D8A8);
-  transition:width .1s linear;
+  height:100%;width:0;
+  background:linear-gradient(90deg,#D4AF37,#E8D8A8);
+  transition:width .15s linear;border-radius:3px;
 }
 
-/* Nav */
+/* ==================== ناوبری ==================== */
 .nav{
-  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-  display:flex;gap:12px;align-items:center;z-index:99;
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;align-items:center;z-index:99;
+  transition:opacity .8s ease;
 }
 .nav button{
   background:rgba(11,30,51,.9);color:#D4AF37;
   border:1px solid #D4AF37;border-radius:30px;
   padding:10px 22px;font-size:14px;font-family:inherit;
-  cursor:pointer;backdrop-filter:blur(10px);transition:all .3s;
+  font-weight:500;cursor:pointer;backdrop-filter:blur(10px);
+  transition:all .3s ease;white-space:nowrap;
 }
-.nav button:hover{background:#D4AF37;color:#0B1E33}
+.nav button:hover:not(:disabled){background:#D4AF37;color:#0B1E33}
 .nav button:disabled{opacity:.3;cursor:not-allowed}
 .nav .counter{
-  background:rgba(11,30,51,.9);color:#D4AF37;border-radius:30px;
-  padding:10px 18px;font-family:monospace;font-size:13px;
+  background:rgba(11,30,51,.9);color:#D4AF37;
+  border-radius:30px;padding:10px 18px;
+  font-family:'Montserrat',sans-serif;font-size:13px;
   border:1px solid rgba(212,175,55,.4);
+  letter-spacing:1px;min-width:75px;text-align:center;
 }
-/* Toggle autoplay */
 .nav .toggle{
   background:rgba(11,30,51,.9);color:#D4AF37;
   border:1px solid rgba(212,175,55,.4);border-radius:30px;
-  padding:10px 16px;font-size:12px;cursor:pointer;
+  padding:10px 16px;font-size:12px;cursor:pointer;min-width:120px;
 }
-.nav .toggle.off{opacity:.4}
-@media (max-width:600px){
-  #progressWrap{bottom:60px;width:80%}
-  .nav button{padding:8px 14px;font-size:12px}
-  .nav .counter{padding:8px 12px;font-size:11px}
+.nav .toggle:hover{background:#D4AF37;color:#0B1E33}
+
+/* ==================== صفحه پایان ==================== */
+#endScreen{
+  position:fixed;inset:0;z-index:200;
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:radial-gradient(circle at center,#12294a 0%,var(--navy) 75%);
+  padding:40px 24px;
+  text-align:center;
+  opacity:0;
+  transition:opacity 2s ease;
 }
-</style>
-</head>
-<body>
+#endScreen.show{display:flex}
+#endScreen.fade-in{opacity:1}
 
-<div id="flipbook"></div>
-
-<div id="progressWrap"><div id="progressBar"></div></div>
-
-<div class="nav">
-  <button id="btnPrev">قبلی ▶</button>
-  <div class="counter" id="counter">۱ / ۵۹</div>
-  <button id="btnNext">◀ بعدی</button>
-  <button class="toggle" id="toggleAuto">⏸ توقف خودکار</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-<script>
-/* ================= تنظیمات ================= */
-var TOTAL_PAGES = 59;
-var AUTO_DELAY = 11000;   /* زمان خودکار ورق زدن (میلی‌ثانیه) */
-var MUSIC_FADED = false;
-var autoPlaying = true;
-var autoTimer = null;
-var progressTimer = null;
-var autoStartTime = 0;
-
-/* ================= ساخت صفحات ================= */
-var bookEl = document.getElementById('flipbook');
-var html = '';
-
-/* جلد (سخت) */
-html += '<div class="page" data-density="hard"><img src="img-0001.jpg" alt="جلد"></div>';
-
-/* صفحات میانی */
-for (var i = 2; i <= TOTAL_PAGES - 1; i++) {
-  var n = String(i).padStart(4, '0');
-  html += '<div class="page"><img src="img-' + n + '.jpg" loading="lazy" alt="صفحه ' + i + '"></div>';
+#endScreen::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url('logo-gold.png') center center no-repeat;
+  background-size:50% auto;
+  opacity:0.05;
+  pointer-events:none;
 }
 
-/* پشت جلد (سخت) */
-var lastN = String(TOTAL_PAGES).padStart(4, '0');
-html += '<div class="page" data-density="hard"><img src="img-' + lastN + '.jpg" alt="پایان"></div>';
-
-bookEl.innerHTML = html;
-
-/* ================= راه‌اندازی Flipbook ================= */
-var pageFlip = new St.PageFlip(bookEl, {
-  width: 500,
-  height: 700,
-  size: 'stretch',
-  minWidth: 250,
-  maxWidth: 620,
-  minHeight: 350,
-  maxHeight: 900,
-  drawShadow: true,
-  flippingTime: 900,
-  usePortrait: true,      /* در موبایل: یک صفحه، در لپ‌تاپ/تبلت: دو صفحه */
-  autoSize: true,
-  maxShadowOpacity: 0.4,
-  showCover: true,
-  mobileScrollSupport: false,
-  clickEventForward: true,
-  useMouseEvents: true,
-  swipeDistance: 30,
-  showPageCorners: true,
-  disableFlipByClick: false
-});
-
-pageFlip.loadFromHTML(document.querySelectorAll('.page'));
-
-/* ================= ناوبری
+.end-logo{
+  width:130px;height:auto;
+  margin-bottom:36px;
+  filter:drop-shadow(0 8px 40px rgba(212,175,55,.5));
+  animation:endLogoIn 2.4s cubic-bezier(.2,.8,.2,1) both;
+  position:relative;z-index:1;
+}
+.end-slogan{
+  font-size:clamp(22px,4vw,34px);
+  font-weight:700;
+  color:var(--cream);
+  letter-spacing:0.5px;
+  margin-bottom:14px;
+  animation:endFadeUp 2s ease .6s both;
+  position:relative;z-index:1;
+}
+.end-slogan-en{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(10px,1.4vw,13px);
+  font-weight:300;
+  color:var(--silver);
+  letter-spacing:6px;
+  margin-bottom:30px;
+  anima
